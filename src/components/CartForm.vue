@@ -104,7 +104,8 @@ export default {
           address: ''
         },
         message: ''
-      }
+      },
+      orderId: ''
     }
   },
   methods: {
@@ -122,9 +123,11 @@ export default {
       this.$http
         .post(apiUrl, { data })
         .then((res) => {
+          this.orderId = res.data.orderId
+          console.log(this.orderId)
           alert(res.data.message)
-          console.log(res)
           this.$refs.form.resetForm()
+          this.$router.push(`/order/${this.orderId}`)
         })
         .catch((err) => {
           console.log(err)

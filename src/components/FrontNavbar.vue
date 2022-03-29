@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <router-link class="navbar-brand" to="/">
-            蔬贏
+            和饗
             </router-link>
             <button
             class="navbar-toggler"
@@ -16,20 +16,20 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/Products">
+                        <router-link class="nav-link" id="link" to="/Products">
                         產品
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/Cart">
+                        <router-link class="nav-link" id="link" to="/Cart">
                         購物車
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/login">
-                        登入
+                        <router-link class="nav-link" id="link" to="/login">
+                        登入後台
                         </router-link>
                     </li>
                 </ul>
@@ -47,6 +47,26 @@
         </div>
     </nav>
 </template>
+
+<style>
+.navbar {
+  padding: 0px;
+}
+
+.container-fluid {
+  padding: 20px 50px 10px 50px;
+  margin-bottom: 10px;
+  background-color: rgb(104,22,22);
+}
+
+.navbar-collapse {
+  justify-content: flex-end;
+}
+
+#link{
+  color: white;
+}
+</style>
 
 <script>
 import emitter from '@/libs/emitter'

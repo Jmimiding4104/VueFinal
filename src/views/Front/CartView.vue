@@ -63,6 +63,17 @@
           </tr>
         </tbody>
       </table>
+      <div class="coupon">
+        <label for="coupon">請輸入優惠券</label>
+        <input type="text" id="coupon" v-model="couponCode">
+        <button
+          class="btn btn-danger"
+          type="button"
+          @click="useCoupon()"
+        >
+          優惠券折抵
+        </button>
+      </div>
       <!-- 購物車列表 -->
       <div class="text-end">
         <button
@@ -140,6 +151,10 @@
             <td colspan="3" class="text-end">總計</td>
             <td class="text-end">{{ cartData.total }}</td>
           </tr>
+            <tr v-if="couponMoney.length != 0">
+            <td colspan="3" class="text-end">折扣後價格</td>
+            <td class="text-end">{{ couponMoney }}</td>
+          </tr>
         </tfoot>
       </table>
     </div>
@@ -170,7 +185,9 @@ export default {
           tel: ''
         },
         message: ''
-      }
+      },
+      couponCode: '',
+      couponMoney: ''
     }
   },
   components: {
@@ -270,6 +287,15 @@ export default {
         })
         .catch((err) => {
           alert(err.data.message)
+        })
+    },
+    useCoupon () {
+      const Url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/coupon`
+      const code = this.couponCode
+      this.$http.post(Url, { data: { code } })
+        .then((res) => {
+          console.log(res)
+          this.couponMoney = res.data.data.final_total
         })
     },
     openModal (id) {
