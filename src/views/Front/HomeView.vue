@@ -58,6 +58,8 @@
 .wrap {
   max-width: 1000px;
   margin: 0px auto;
+  margin-top: 10px;
+  margin-top: 10px;
 }
 
 .home-img {
@@ -89,11 +91,7 @@ p {
 
 }
 
-.item1 {
-
-}
-
-.item2 h2 {
+.item1 h2 {
   color: brown;
   font-weight:bold;
   padding-left: 10px;
@@ -133,6 +131,14 @@ p {
   display: flex;
 }
 
+.item2 h2 {
+  color: brown;
+  font-weight:bold;
+  padding-left: 10px;
+  border-left: 5px solid brown;
+  border-bottom: 5px solid brown;
+}
+
 .item2-img {
   background: url(../../../image/item2.jpg);
   background-repeat: no-repeat;
@@ -143,7 +149,7 @@ p {
 
 .item2-describe {
   position: relative;
-  left: 40px;
+  left: 50px;
   bottom: -100px;
   max-width: 300px;
   max-height: ;

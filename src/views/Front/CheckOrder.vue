@@ -5,6 +5,17 @@
                 確認訂單
             </h1>
         </div>
+        <div class="order-product">
+          <table>
+            <tr>
+              <th>商品</th>
+              <th>數量</th>
+            </tr>
+            <tr v-for="item in items" :key="item.id">
+              <td>{{item.id}}</td>
+            </tr>
+          </table>
+        </div>
         <div class="information">
             <div class="address">
                 <p>訂單地址:</p>
@@ -39,7 +50,9 @@ export default {
   data () {
     return {
       order: '',
-      user: {}
+      user: {},
+      items: [],
+      ooo: '-MzQn2hEA0i3j2N1m3OO'
     }
   },
   methods: {
@@ -50,7 +63,8 @@ export default {
           console.log(res)
           this.order = res.data.order
           this.user = res.data.order.user
-          console.log(this.order)
+          this.items = res.data.order.products.MzQn2hEA0i3j2N1m3OO
+          console.log(this.items)
         })
     },
     goPay () {

@@ -55,7 +55,6 @@
 
 .container-fluid {
   padding: 20px 50px 10px 50px;
-  margin-bottom: 10px;
   background-color: rgb(104,22,22);
 }
 

@@ -1,12 +1,11 @@
 <template>
-  <h2>購物車</h2>
+<div class="wrap">
   <div class="container">
     <div class="mt-4">
       <!-- 產品Modal -->
       <CartModal ref="CartModal" :id="productId" @add-to-cart="addToCart"></CartModal>
       <!-- 產品Modal -->
-
-      <table class="table align-middle">
+      <table class="table align-middle" v-show="orderStatus === false">
         <thead>
           <tr>
             <th>圖片</th>
@@ -63,28 +62,40 @@
           </tr>
         </tbody>
       </table>
-      <div class="coupon">
-        <label for="coupon">請輸入優惠券</label>
-        <input type="text" id="coupon" v-model="couponCode">
-        <button
-          class="btn btn-danger"
-          type="button"
-          @click="useCoupon()"
-        >
-          優惠券折抵
-        </button>
-      </div>
+      <h3 v-show="orderStatus === true" class="order-list">購買清單與確認購買人資料</h3>
+                  <div class="user" v-show="orderStatus === true">
+              <div class="item">
+              <h3>Email：</h3>
+              {{form.user.email}}
+              </div>
+              <div class="item">
+              <h3>收件人姓名：</h3>
+              {{form.user.name}}
+              </div>
+              <div class="item">
+              <h3>收件人手機：</h3>
+              {{form.user.tel}}
+              </div>
+              <div class="item">
+              <h3>地址：</h3>
+              {{form.user.address}}
+              </div>
+              <div class="item">
+              <h3>留言：</h3>
+              {{form.message}}
+              </div>
+              </div>
       <!-- 購物車列表 -->
       <div class="text-end">
         <button
           class="btn btn-outline-danger"
           type="button"
           @click="delCarts()"
+          v-show="orderStatus === false"
         >
           清空購物車
         </button>
       </div>
-
       <table class="table align-middle">
         <thead>
           <tr>
@@ -157,15 +168,142 @@
           </tr>
         </tfoot>
       </table>
+      <div class="coupon" v-show="orderStatus === false">
+        <label for="coupon">請輸入優惠券</label>
+        <input type="text" id="coupon" v-model="couponCode">
+        <button
+          class="btn btn-danger"
+          type="button"
+          @click="useCoupon()"
+        >
+          優惠券折抵
+        </button>
+      </div>
     </div>
-<CartForm></CartForm>
+<div class="my-5 row justify-content-center">
+          <VForm ref="form" class="col-md-6 " v-slot="{ errors }" >
+            <div class="mb-3" v-show="orderStatus === false">
+              <label for="email" class="form-label">Email</label>
+              <VField
+                id="email"
+                name="email"
+                type="email"
+                class="form-control"
+                :class="{ 'is-invalid': errors['email'] }"
+                placeholder="請輸入 Email"
+                rules="email|required"
+                v-model="form.user.email"
+              ></VField>
+              <error-message
+                name="email"
+                class="invalid-feedback"
+              ></error-message>
+            </div>
+
+            <div class="mb-3" v-show="orderStatus === false">
+              <label for="name" class="form-label">收件人姓名</label>
+              <VField
+                id="name"
+                name="姓名"
+                type="text"
+                class="form-control"
+                :class="{ 'is-invalid': errors['姓名'] }"
+                placeholder="請輸入姓名"
+                rules="required"
+                v-model="form.user.name"
+              ></VField>
+              <error-message
+                name="姓名"
+                class="invalid-feedback"
+              ></error-message>
+            </div>
+
+            <div class="mb-3" v-show="orderStatus === false">
+              <label for="phone" class="form-label">收件人手機</label>
+              <VField
+                id="phone"
+                name="手機"
+                type="text"
+                class="form-control"
+                :class="{ 'is-invalid': errors['手機'] }"
+                placeholder="請輸入手機"
+                :rules="isPhone"
+                v-model="form.user.tel"
+              ></VField>
+              <error-message
+                name="手機"
+                class="invalid-feedback"
+              ></error-message>
+            </div>
+
+            <div class="mb-3" v-show="orderStatus === false">
+              <label for="address" class="form-label">收件人地址</label>
+              <VField
+                id="address"
+                name="地址"
+                type="text"
+                class="form-control"
+                :class="{ 'is-invalid': errors['地址'] }"
+                placeholder="請輸入地址"
+                rules="required"
+                v-model="form.user.address"
+              ></VField>
+              <error-message
+                name="地址"
+                class="invalid-feedback"
+              ></error-message>
+            </div>
+
+            <div class="mb-3" v-show="orderStatus === false">
+              <label for="message" class="form-label">留言</label>
+              <textarea
+                id="message"
+                class="form-control"
+                cols="30"
+                rows="10"
+                v-model="form.message"
+              ></textarea>
+            </div>
+            <div class="text-end">
+              <button type="submit" class="btn btn-danger" @click.prevent="chageStatus()" v-show="orderStatus === false">
+                下一步
+              </button>
+            </div>
+            <div class="text-end">
+              <button type="submit" class="btn btn-danger" @click.prevent="sendOrder()" v-show="orderStatus === true">
+                送出訂單並付款
+              </button>
+            </div>
+          </VForm>
+        </div>
   </div>
+  {{orderStatus}}
+</div>
 </template>
+
+<style>
+.order-list {
+  font-weight: bold;
+  padding-left: 3px;
+  color: brown;
+  border-bottom: 3px solid brown;
+  border-left: 3px solid brown;
+}
+
+.coupon {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.user .item {
+  margin: 10px 0px;
+}
+</style>
 
 <script>
 import CartModal from '@/components/CartModal'
 import emitter from '@/libs/emitter'
-import CartForm from '@/components/CartForm'
 
 export default {
   data () {
@@ -187,11 +325,12 @@ export default {
         message: ''
       },
       couponCode: '',
-      couponMoney: ''
+      couponMoney: '',
+      orderStatus: false,
+      orderId: ''
     }
   },
   components: {
-    CartForm,
     CartModal
   },
   methods: {
@@ -297,6 +436,42 @@ export default {
           console.log(res)
           this.couponMoney = res.data.data.final_total
         })
+    },
+    chageStatus () {
+      this.orderStatus = true
+    },
+    goPay () {
+      const { id } = this.$route.params
+      this.$http.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/pay/${id}`)
+        .then((res) => {
+          alert(res.data.message)
+          console.log(res)
+          this.$router.push(`/Finish/${this.orderId}`)
+        })
+    },
+    sendOrder () {
+      const apiUrl = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order`
+      const data = {
+        user: this.form.user,
+        message: this.form.message
+      }
+      console.log(data)
+      this.$http
+        .post(apiUrl, { data })
+        .then((res) => {
+          this.orderId = res.data.orderId
+          console.log(this.orderId)
+          alert(res.data.message)
+          this.$refs.form.resetForm()
+          this.goPay()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    isPhone (value) {
+      const phoneNumber = /^(09)[0-9]{8}$/
+      return phoneNumber.test(value) ? true : '需要正確的電話號碼'
     },
     openModal (id) {
       this.$refs.CartModal.openModal()

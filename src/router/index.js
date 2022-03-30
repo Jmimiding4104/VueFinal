@@ -21,10 +21,6 @@ const routes = [
         component: () => import('../views/Front/CartView.vue')
       },
       {
-        path: 'order/:id',
-        component: () => import('../views/Front/CheckOrder.vue')
-      },
-      {
         path: 'Products',
         component: () => import('../views/Front/ProductsView.vue')
       },
@@ -33,7 +29,7 @@ const routes = [
         component: () => import('../views/Front/ProductView.vue')
       },
       {
-        path: 'Finish',
+        path: 'Finish/:id',
         component: () => import('../views/Front/FinishView.vue')
       }
     ]
