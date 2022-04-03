@@ -1,4 +1,5 @@
 <template>
+  <div class="front-navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <router-link class="navbar-brand" to="/">
@@ -19,12 +20,7 @@
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
                         <router-link class="nav-link" id="link" to="/Products">
-                        產品
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" id="link" to="/Cart">
-                        購物車
+                        產品列表
                         </router-link>
                     </li>
                     <li class="nav-item">
@@ -46,14 +42,15 @@
             </div>
         </div>
     </nav>
+  </div>
 </template>
 
 <style>
-.navbar {
+.front-navbar .navbar {
   padding: 0px;
 }
 
-.container-fluid {
+.front-navbar .navbar .container-fluid {
   padding: 20px 50px 10px 50px;
   background-color: rgb(104,22,22);
 }

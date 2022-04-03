@@ -2,66 +2,6 @@
 <div class="wrap">
   <div class="container">
     <div class="mt-4">
-      <!-- 產品Modal -->
-      <CartModal ref="CartModal" :id="productId" @add-to-cart="addToCart"></CartModal>
-      <!-- 產品Modal -->
-      <table class="table align-middle" v-show="orderStatus === false">
-        <thead>
-          <tr>
-            <th>圖片</th>
-            <th>商品名稱</th>
-            <th>價格</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="product in products" :key="product.id">
-            <td style="width: 200px">
-              <div
-                :style="{ backgroundImage: `url(${product.imageUrl})` }"
-                style="
-                  height: 100px;
-                  background-size: cover;
-                  background-position: center;
-                "
-              ></div>
-            </td>
-            <td>{{ product.title }}</td>
-            <td>
-              <div class="h5" v-if="product.price === product.origin_price">
-                {{ product.price }} 元
-              </div>
-              <div v-else>
-                <del class="h6">原價 {{ product.origin_price }} 元</del>
-                <div class="h5">現在只要 {{ product.price }} 元</div>
-              </div>
-            </td>
-            <td>
-              <div class="btn-group btn-group-sm">
-                <button
-                  type="button"
-                  class="btn btn-outline-secondary"
-                  @click="openModal(product.id)"
-                >
-                  查看更多
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-danger"
-                  @click="addToCart(product.id)"
-                  :disabled="isLoading === product.id"
-                >
-                  <span
-                    class="spinner-border spinner-border-sm"
-                    v-show="isLoading === product.id"
-                  ></span>
-                  加到購物車
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
       <h3 v-show="orderStatus === true" class="order-list">購買清單與確認購買人資料</h3>
                   <div class="user" v-show="orderStatus === true">
               <div class="item">
@@ -277,7 +217,6 @@
           </VForm>
         </div>
   </div>
-  {{orderStatus}}
 </div>
 </template>
 
@@ -302,7 +241,6 @@
 </style>
 
 <script>
-import CartModal from '@/components/CartModal'
 import emitter from '@/libs/emitter'
 
 export default {
@@ -329,9 +267,6 @@ export default {
       orderStatus: false,
       orderId: ''
     }
-  },
-  components: {
-    CartModal
   },
   methods: {
     getProducts () {

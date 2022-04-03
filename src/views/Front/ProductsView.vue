@@ -5,13 +5,14 @@
         <h2>產品列表</h2>
       <ul>
         <li><a href="#">所有產品區</a></li>
-        <li><a href="#">生鮮肉品區</a></li>
-        <li><a href="#">熟食冷凍包</a></li>
+        <!--<li><a href="#">生鮮肉品區</a></li>
+        <li><a href="#">熟食冷凍包</a></li>-->
       </ul>
     </div>
+    <div class="productslist">
     <div class="row row-cols-xs-1 row-cols-md-2 row-cols-lg-3">
       <div class="col" v-for="item in products" :key="item.id">
-        <div class="card h-100" style="width: 18rem;">
+        <div class="card h-100" style="width: 16rem;">
           <div class="card-header">
             <img :src="item.imageUrl" class="card-img-top" alt="...">
           </div>
@@ -27,8 +28,12 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 </div>
+  <div class="footer">
+      <p>此網站非實際運營之網站，僅為學習用途。</p>
+  </div>
 </template>
 
 <style>
@@ -63,6 +68,52 @@
 .list ul li a:hover{
   background-color: brown;
   color: white;
+}
+
+.productslist .row {
+  margin: 0px;
+}
+
+.productslist .row .col {
+  padding: 0px;
+  margin: 0px;
+  width: 280px;
+}
+
+@media(max-width:690px){
+  .product-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .list {
+    display: flex;
+    justify-content: center;
+  }
+
+  .list ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 450px;
+  }
+
+  .list ul li a {
+    padding: 5px;
+    margin: 10px;
+    background-color: rgb(206, 53, 53);
+    color: white;
+    border-radius: 5px;
+  }
+
+  .list h2{
+  display: none;
+}
+
+  .productslist .row .col{
+    display: flex;
+    justify-content: center;
+  }
 }
 </style>
 

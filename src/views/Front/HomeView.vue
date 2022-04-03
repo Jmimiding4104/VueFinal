@@ -54,12 +54,12 @@
 </template>
 
 <style>
-
 .wrap {
   max-width: 1000px;
   margin: 0px auto;
   margin-top: 10px;
   margin-top: 10px;
+  position: relative;
 }
 
 .home-img {
@@ -80,6 +80,20 @@
   margin-right: 80px;
   padding: 30px;
   border-radius: 10px;
+}
+
+@media(max-width:768px) {
+  .home-img {
+    display: flex;
+  }
+  .home-text {
+    width: 768px;
+    margin-right: 0px;
+    border-radius: 0px;
+    display: flex;
+    align-items: end;
+    padding-right: 50px;
+  }
 }
 
 p {
@@ -123,6 +137,34 @@ p {
   background-color: rgba(255,182,193,0.5);
 }
 
+@media(max-width:1200px){
+  .item1-describe {
+  position: relative;
+  left: -10px;
+  bottom: -100px;
+  max-width: 300px;
+  max-height: ;
+  padding: 20px;
+  color: black;
+  font-weight:bold;
+  background-color: rgba(255,182,193,0.5);
+}
+}
+
+@media(max-width:390px){
+  .item1-describe {
+  position: relative;
+  left: -10px;
+  bottom: -50px;
+  max-width: 300px;
+  max-height: ;
+  padding: 20px;
+  color: black;
+  font-weight:bold;
+  background-color: rgba(255,182,193,0.5);
+}
+}
+
 .item2 {
   margin-top: 50px;
 }
@@ -159,11 +201,43 @@ p {
   background-color: rgba(255,182,193,0.5);
 }
 
+@media(max-width:1200px){
+  .item2-describe {
+  position: relative;
+  left: 30px;
+  bottom: -100px;
+  max-width: 300px;
+  max-height: ;
+  padding: 20px;
+  color: black;
+  font-weight:bold;
+  background-color: rgba(255,182,193,0.5);
+}
+}
+
+@media(max-width:990px){
+  .item2-describe {
+  position: relative;
+  left: 20px;
+  bottom: -100px;
+  max-width: 300px;
+  max-height: ;
+  padding: 20px;
+  color: black;
+  font-weight:bold;
+  background-color: rgba(255,182,193,0.5);
+}
+}
+
 .footer {
+  width: 100%;
+  position: ;
+  bottom: 0px;
   background-color: rgb(114,38,38);
   color: white;
   padding: 10px;
   text-align: center;
+  margin-top: 20px;
 }
 
 </style>
