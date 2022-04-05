@@ -34,7 +34,7 @@
           <div class="item2-container">
           <div class="item2-text">
           <div class="item2-describe">
-            <h3>熟食冷凍包</h3>
+            <h3>熟食冷凍</h3>
             <p>
               若您不擅烹煮，
               亦或環境不須可進行烹調，
