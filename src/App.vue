@@ -3,5 +3,5 @@
 </template>
 
 <style lang="scss">
-@import "bootstrap/scss/bootstrap"
+@import "./assets/stylesheet/all.scss"
 </style>

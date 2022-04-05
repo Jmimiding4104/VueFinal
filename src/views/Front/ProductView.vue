@@ -1,75 +1,78 @@
 <template>
-<div class="product-track">
-  <div class="product-track-text">
-  <a href="/">首頁</a>
-  >
-  <a href="/#/Products">產品</a>
-  >
-  {{product.title}}
-  </div>
-</div>
-<div class="wrap">
-  <div class="product-container">
-    <div class="product-img">
-    <img :src="product.imageUrl" class="card-img-top" alt="...">
-    </div>
-    <div class="product-text">
-    <div class="product-category">
-      <span>
-      {{product.category}}
-      </span>
-    </div>
-    <div class="preproduct-text one">
-      <h3>產品名稱</h3>
-    <div class="product-title">
-      {{product.title}}
-    </div>
-    </div>
-    <div class="preproduct-text">
-      <h3>產品售價</h3>
-    <div class="product-price">
-      {{product.price}}元
-    </div>
-    </div>
-    <div class="text-container">
-    <div class="preproduct-text">
-      <h3>產品內容</h3>
-    <div>
-      {{product.content}}
-    </div>
-    </div>
-    </div>
+  <div class="product-track">
+    <div class="product-track-text">
+      <a href="/">首頁</a>
+      >
+      <a href="/#/Products">產品</a>
+      >
+      {{ product.title }}
     </div>
   </div>
-  <div class="product-introduct">
+  <div class="wrap">
+    <div class="product-container">
+      <div class="product-img">
+        <img :src="product.imageUrl" class="card-img-top" alt="..." />
+      </div>
+      <div class="product-text">
+        <div class="product-category">
+          <span>
+            {{ product.category }}
+          </span>
+        </div>
+        <div class="preproduct-text one">
+          <h3>產品名稱</h3>
+          <div class="product-title">
+            {{ product.title }}
+          </div>
+        </div>
+        <div class="preproduct-text">
+          <h3>產品售價</h3>
+          <div class="product-price">{{ product.price }}元</div>
+        </div>
+        <div class="text-container">
+          <div class="preproduct-text">
+            <h3>產品內容</h3>
+            <div>
+              {{ product.content }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="product-introduct">
       <h3>產品介紹</h3>
-    <div class="product-description">
-      {{product.description}}
-    </div>
-    <div class="paybuttom">
-                    <button
-                  type="button"
-                  class="btn btn-outline-danger"
-                  @click="addToCart(product.id)"
-                  :disabled="isLoading === product.id"
-                >
-                  <span
-                    class="spinner-border spinner-border-sm"
-                    v-show="isLoading === product.id"
-                  ></span>
-                  加到購物車
-                </button>
-                </div>
+      <div class="product-description">
+        {{ product.description }}
+      </div>
+      <div class="paybuttom">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          @click="addToCart(product.id)"
+          :disabled="isLoading === product.id"
+        >
+          <span
+            class="spinner-border spinner-border-sm"
+            v-show="isLoading === product.id"
+          ></span>
+          加到購物車
+        </button>
+      </div>
     </div>
   </div>
   <div class="product-footer">
-      <p>此網站非實際運營之網站，僅為學習用途。</p>
+    <p>此網站非實際運營之網站，僅為學習用途。</p>
   </div>
 </template>
 
 <style>
 .wrap {
   position: relative;
+}
+
+.product-container {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .product-track {
@@ -99,7 +102,7 @@
 }
 
 .product-text {
-  max-width: 500px;
+  width: 500px;
   margin-left: 30px;
   display: block;
 }
@@ -119,6 +122,10 @@
 .preproduct-text h3 {
   color: brown;
   border-bottom: 3px solid brown;
+}
+
+.product-introduct {
+  margin-left: 10px;
 }
 
 .product-introduct h3 {
@@ -149,6 +156,9 @@
 }
 
 @media(max-width:690px){
+  .product-img {
+    margin-left: 30px;
+  }
   .product-container {
     display: flex;
   }
@@ -157,7 +167,7 @@
   }
   .product-introduct {
     max-width: 500px;
-    margin-left: 30px;
+    margin-left: 40px;
   }
 }
 </style>
@@ -173,6 +183,7 @@ export default {
   methods: {
     getProduct () {
       const { id } = this.$route.params
+      console.log(id)
       this.$http.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${id}`)
         .then((res) => {
           this.product = res.data.product

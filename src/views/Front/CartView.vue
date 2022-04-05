@@ -1,226 +1,180 @@
 <template>
-<div class="wrap">
-  <div class="container">
-    <div class="mt-4">
-      <h3 v-show="orderStatus === true" class="order-list">購買清單與確認購買人資料</h3>
-                  <div class="user" v-show="orderStatus === true">
-              <div class="item">
-              <h3>Email：</h3>
-              {{form.user.email}}
-              </div>
-              <div class="item">
-              <h3>收件人姓名：</h3>
-              {{form.user.name}}
-              </div>
-              <div class="item">
-              <h3>收件人手機：</h3>
-              {{form.user.tel}}
-              </div>
-              <div class="item">
-              <h3>地址：</h3>
-              {{form.user.address}}
-              </div>
-              <div class="item">
-              <h3>留言：</h3>
-              {{form.message}}
-              </div>
-              </div>
-      <!-- 購物車列表 -->
-      <div class="text-end">
-        <button
-          class="btn btn-outline-danger"
-          type="button"
-          @click="delCarts()"
-          v-show="orderStatus === false"
-        >
-          清空購物車
-        </button>
-      </div>
-      <table class="table align-middle">
-        <thead>
-          <tr>
-            <th></th>
-            <th>品名</th>
-            <th style="width: 150px">數量/單位</th>
-            <th>單價</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template v-if="cartData.carts">
-            <tr v-for="item in cartData.carts" :key="item.id">
-              <td>
-                <button
-                  type="button"
-                  class="btn btn-outline-danger btn-sm"
-                  @click="delCartItem(item.id)"
-                  :disabled="isLoading === item.id"
-                >
-                  <!--<span
-                          class="spinner-grow spinner-grow-sm"
-                          v-show="isLoading ===item.id"
-                        ></span>-->
-                  x
-                </button>
-              </td>
-              <td>{{ item.product.title }}</td>
-              <td>
-                <div class="input-group input-group-sm">
-                  <div class="input-group mb-3">
-                    <!--<input
+  <div class="wrap">
+    <div class="order-container">
+      <div>
+        <div class="orderpage">
+          <div class="orderhead">
+            <h2>您的購物車</h2>
+            <div class="clear-cart">
+              <button
+                class="btn btn-outline-danger"
+                type="button"
+                @click="delCarts()"
+              >
+                刪除所有產品
+              </button>
+            </div>
+          </div>
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th style="width: 240px"></th>
+                <th style="width: 240px" class="text-center">品項</th>
+                <th style="width: 240px" class="text-center">數量/單位</th>
+                <th style="width: 240px" class="text-center">單價</th>
+                <th style="width: 40px"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <template v-if="cartData.carts">
+                <tr v-for="item in cartData.carts" :key="item.id">
+                  <td class="order-img">
+                    <img
+                      :src="item.product.imageUrl"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                  </td>
+                  <td class="text-center">{{ item.product.title }}</td>
+                  <td>
+                    <div class="input-group input-group-sm">
+                      <div class="input-group mb-3">
+                        <!--<input
                           min="1"
                           type="number"
                           class="form-control"
                           v-model.number="item.qty"
                         />-->
-                    <select
-                      id=""
-                      class="form-select"
-                      v-model="item.qty"
-                      @change="updateCarts(item)"
+                        <select
+                          id=""
+                          class="form-select"
+                          v-model="item.qty"
+                          @change="updateCarts(item)"
+                          :disabled="isLoading === item.id"
+                        >
+                          <option
+                            :value="num"
+                            v-for="num in 100"
+                            :key="`${num}${item.id}`"
+                          >
+                            {{ num }}
+                          </option>
+                        </select>
+                        <span class="input-group-text" id="basic-addon2">{{
+                          item.product.unit
+                        }}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-center">{{ item.final_total }}</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger btn-sm"
+                      @click="delCartItem(item.id)"
                       :disabled="isLoading === item.id"
                     >
-                      <option
-                        :value="num"
-                        v-for="num in 100"
-                        :key="`${num}${item.id}`"
-                      >
-                        {{ num }}
-                      </option>
-                    </select>
-                    <span class="input-group-text" id="basic-addon2">{{
-                      item.product.unit
-                    }}</span>
-                  </div>
-                </div>
-              </td>
-              <td class="text-end">{{ item.final_total }}</td>
-            </tr>
-          </template>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="3" class="text-end">總計</td>
-            <td class="text-end">{{ cartData.total }}</td>
-          </tr>
-            <tr v-if="couponMoney.length != 0">
-            <td colspan="3" class="text-end">折扣後價格</td>
-            <td class="text-end">{{ couponMoney }}</td>
-          </tr>
-        </tfoot>
-      </table>
-      <div class="coupon" v-show="orderStatus === false">
-        <label for="coupon">請輸入優惠券</label>
-        <input type="text" id="coupon" v-model="couponCode">
-        <button
-          class="btn btn-danger"
-          type="button"
-          @click="useCoupon()"
-        >
-          優惠券折抵
-        </button>
-      </div>
-    </div>
-<div class="my-5 row justify-content-center">
-          <VForm ref="form" class="col-md-6 " v-slot="{ errors }" >
-            <div class="mb-3" v-show="orderStatus === false">
-              <label for="email" class="form-label">Email</label>
-              <VField
-                id="email"
-                name="email"
-                type="email"
-                class="form-control"
-                :class="{ 'is-invalid': errors['email'] }"
-                placeholder="請輸入 Email"
-                rules="email|required"
-                v-model="form.user.email"
-              ></VField>
-              <error-message
-                name="email"
-                class="invalid-feedback"
-              ></error-message>
+                      x
+                    </button>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+            <tfoot class="order-tfooter">
+              <tr>
+                <td colspan="3">
+            <div class="ordercoupn">
+            <input
+              type="text"
+              id="coupon"
+              v-model="couponCode"
+              placeholder="請輸入優惠碼"
+            />
+            <button class="btn btn-primary" type="button" @click="useCoupon()">
+              折抵GO
+            </button>
+          </div>
+                </td>
+                <td colspan="1" class="text-end">總計</td>
+                <td class="text-end">{{ cartData.total }}</td>
+              </tr>
+              <tr v-if="couponMoney.length != 0">
+                <td colspan="4" class="text-end">折扣後價格</td>
+                <td class="text-end">{{ couponMoney }}</td>
+              </tr>
+            </tfoot>
+          </table>
+          <div class="order-footer">
+            <div class="order-next">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                @click.prevent="this.$router.push('/Products')"
+              >
+                繼續購物
+              </button>
             </div>
-
-            <div class="mb-3" v-show="orderStatus === false">
-              <label for="name" class="form-label">收件人姓名</label>
-              <VField
-                id="name"
-                name="姓名"
-                type="text"
-                class="form-control"
-                :class="{ 'is-invalid': errors['姓名'] }"
-                placeholder="請輸入姓名"
-                rules="required"
-                v-model="form.user.name"
-              ></VField>
-              <error-message
-                name="姓名"
-                class="invalid-feedback"
-              ></error-message>
-            </div>
-
-            <div class="mb-3" v-show="orderStatus === false">
-              <label for="phone" class="form-label">收件人手機</label>
-              <VField
-                id="phone"
-                name="手機"
-                type="text"
-                class="form-control"
-                :class="{ 'is-invalid': errors['手機'] }"
-                placeholder="請輸入手機"
-                :rules="isPhone"
-                v-model="form.user.tel"
-              ></VField>
-              <error-message
-                name="手機"
-                class="invalid-feedback"
-              ></error-message>
-            </div>
-
-            <div class="mb-3" v-show="orderStatus === false">
-              <label for="address" class="form-label">收件人地址</label>
-              <VField
-                id="address"
-                name="地址"
-                type="text"
-                class="form-control"
-                :class="{ 'is-invalid': errors['地址'] }"
-                placeholder="請輸入地址"
-                rules="required"
-                v-model="form.user.address"
-              ></VField>
-              <error-message
-                name="地址"
-                class="invalid-feedback"
-              ></error-message>
-            </div>
-
-            <div class="mb-3" v-show="orderStatus === false">
-              <label for="message" class="form-label">留言</label>
-              <textarea
-                id="message"
-                class="form-control"
-                cols="30"
-                rows="10"
-                v-model="form.message"
-              ></textarea>
-            </div>
-            <div class="text-end">
-              <button type="submit" class="btn btn-danger" @click.prevent="chageStatus()" v-show="orderStatus === false">
+            <div class="order-next">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                @click.prevent="nextView()"
+              >
                 下一步
               </button>
             </div>
-            <div class="text-end">
-              <button type="submit" class="btn btn-danger" @click.prevent="sendOrder()" v-show="orderStatus === true">
-                送出訂單並付款
-              </button>
-            </div>
-          </VForm>
+          </div>
         </div>
+      </div>
+    </div>
   </div>
-</div>
+  <div class="footer">
+    <p>此網站非實際運營之網站，僅為學習用途。</p>
+  </div>
 </template>
 
 <style>
+.order-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px 0px 10px;
+}
+
+.orderpage {
+  width: 100%;
+}
+
+.orderhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clear-cart {
+  max-height: 36px;
+}
+
+.orderpage h2 {
+  margin-top: 10px;
+  font-weight: bold;
+  color: brown;
+  border-left: 5px solid brown;
+  padding-left: 10px;
+}
+
+.orderpage table {
+  color: brown;
+}
+
+.orderpage tbody td {
+  color: black;
+}
+
+.order-img {
+  max-width: 100px;
+}
+
 .order-list {
   font-weight: bold;
   padding-left: 3px;
@@ -229,10 +183,41 @@
   border-left: 3px solid brown;
 }
 
-.coupon {
+.clear-cart {
+  display: flex;
+}
+
+.order-footer {
   display: flex;
   justify-content: end;
   align-items: center;
+}
+
+.order-next {
+  margin: 10px;
+}
+
+.ordercoupn {
+  display: flex;
+  align-items: center;
+}
+
+.ordercoupn button {
+  max-height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+@media(max-width:600px) {
+  .order-footer {
+    justify-content: center;
+  }
+}
+
+@media(max-width:426px) {
+  .ordercoupn button {
+    max-height: none;
+  }
 }
 
 .user .item {
@@ -366,18 +351,20 @@ export default {
     useCoupon () {
       const Url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/coupon`
       const code = this.couponCode
-      this.$http.post(Url, { data: { code } })
-        .then((res) => {
-          console.log(res)
-          this.couponMoney = res.data.data.final_total
-        })
+      this.$http.post(Url, { data: { code } }).then((res) => {
+        console.log(res)
+        this.couponMoney = res.data.data.final_total
+      })
     },
-    chageStatus () {
-      this.orderStatus = true
+    nextView () {
+      this.$router.push('/FillIn')
     },
     goPay () {
       const { id } = this.$route.params
-      this.$http.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/pay/${id}`)
+      this.$http
+        .post(
+          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/pay/${id}`
+        )
         .then((res) => {
           alert(res.data.message)
           console.log(res)

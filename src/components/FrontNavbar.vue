@@ -33,6 +33,7 @@
                 to="/Cart"
                 type="button"
                 class="btn btn-primary position-relative"
+                style="border: 1px solid black"
                 >
                     結帳
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">

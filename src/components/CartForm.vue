@@ -1,6 +1,6 @@
 <template>
-        <div class="my-5 row justify-content-center">
-          <VForm ref="form" class="col-md-6" v-slot="{ errors }">
+        <div class="row justify-content-center">
+          <VForm ref="form" v-slot="{ errors }">
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <VField
@@ -83,17 +83,13 @@
                 v-model="form.message"
               ></textarea>
             </div>
-            <div class="text-end">
-              <button type="submit" class="btn btn-danger" @click.prevent="sendOrder()">
-                送出訂單
-              </button>
-            </div>
           </VForm>
         </div>
 </template>
 
 <script>
 export default {
+  props: ['email'],
   data () {
     return {
       form: {
@@ -124,10 +120,10 @@ export default {
         .post(apiUrl, { data })
         .then((res) => {
           this.orderId = res.data.orderId
-          console.log(this.orderId)
+          console.log(`/Finish/${this.orderId}`)
           alert(res.data.message)
-          this.$refs.form.resetForm()
-          this.$router.push(`/order/${this.orderId}`)
+          // this.$refs.form.resetForm()
+          // this.$router.push(`/Finish/${this.orderId}`)
         })
         .catch((err) => {
           console.log(err)

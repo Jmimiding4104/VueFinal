@@ -48,9 +48,9 @@
       </div>
     </div>
   </div>
-      <div class="footer">
-      <p>此網站非實際運營之網站，僅為學習用途。</p>
-    </div>
+  <div class="footer">
+    <p>此網站非實際運營之網站，僅為學習用途。</p>
+  </div>
 </template>
 
 <style>

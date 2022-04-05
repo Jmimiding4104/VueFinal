@@ -21,6 +21,10 @@ const routes = [
         component: () => import('../views/Front/CartView.vue')
       },
       {
+        path: 'FillIn',
+        component: () => import('../views/Front/FillinView.vue')
+      },
+      {
         path: 'Products',
         component: () => import('../views/Front/ProductsView.vue')
       },
@@ -29,8 +33,8 @@ const routes = [
         component: () => import('../views/Front/ProductView.vue')
       },
       {
-        path: 'Finish/:id',
-        component: () => import('../views/Front/FinishView.vue')
+        path: 'Complete',
+        component: () => import('../views/Front/CompleteView.vue')
       }
     ]
   },

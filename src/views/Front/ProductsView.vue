@@ -4,13 +4,13 @@
     <div class="list">
         <h2>產品列表</h2>
       <ul>
-        <li><a href="#">所有產品區</a></li>
-        <!--<li><a href="#">生鮮肉品區</a></li>
-        <li><a href="#">熟食冷凍包</a></li>-->
+        <li><button type="button" class="btn btn-outline-primary">所有產品區</button></li>
+        <!--<li><button type="button" class="btn btn-outline-primary">生鮮肉品區</button></li>
+        <li><button type="button" class="btn btn-outline-primary">熟食冷凍包</button></li>-->
       </ul>
     </div>
     <div class="productslist">
-    <div class="row row-cols-xs-1 row-cols-md-2 row-cols-lg-3">
+    <div class="row row-cols-xs-1 row-cols-md-3 row-cols-lg-3">
       <div class="col" v-for="item in products" :key="item.id">
         <div class="card h-100" style="width: 16rem;">
           <div class="card-header">
@@ -54,15 +54,17 @@
 
 .list ul li {
   list-style-type: none;
+  display: flex;
+  justify-content: center;
 }
 
-.list ul li a {
+.list ul li button {
   display: block;
   text-decoration: none;
   text-align: center;
-  padding: 10px 0px;
   color: brown;
   font-weight:bold;
+  margin-bottom: 10px;
 }
 
 .list ul li a:hover{
@@ -98,7 +100,7 @@
     width: 450px;
   }
 
-  .list ul li a {
+  .list ul li button {
     padding: 5px;
     margin: 10px;
     background-color: rgb(206, 53, 53);
