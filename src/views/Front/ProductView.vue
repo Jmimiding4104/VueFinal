@@ -102,7 +102,7 @@
 }
 
 .product-text {
-  width: 500px;
+  width: 95%;
   margin-left: 30px;
   display: block;
 }
@@ -126,6 +126,7 @@
 
 .product-introduct {
   margin-left: 10px;
+  width: 98.2%;
 }
 
 .product-introduct h3 {
@@ -161,12 +162,13 @@
   }
   .product-container {
     display: flex;
+    flex-direction: column;
   }
   .product-text {
-    max-width: 500px;
+    width: 90%;
   }
   .product-introduct {
-    max-width: 500px;
+    width: 87.5%;
     margin-left: 40px;
   }
 }

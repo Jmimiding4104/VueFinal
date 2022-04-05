@@ -215,7 +215,7 @@
   flex-direction: space-around;
   padding-left: 60px;
   padding-right: 10px;
-  margin-bottom: 150px;
+  margin-bottom: 290px;
 }
 
 .information {

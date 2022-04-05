@@ -29,6 +29,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-bottom: 33px;
 }
 
 .complete-view .text-view {
