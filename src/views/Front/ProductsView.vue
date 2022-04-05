@@ -4,7 +4,7 @@
     <div class="list">
         <h2>產品列表</h2>
       <ul>
-        <li><button type="button" class="btn btn-outline-primary">所有產品區</button></li>
+        <li><button type="button" class="btn btn-outline-primary" @click.prevent="this.$router.push('/Products')">所有產品區</button></li>
         <!--<li><button type="button" class="btn btn-outline-primary">生鮮肉品區</button></li>
         <li><button type="button" class="btn btn-outline-primary">熟食冷凍包</button></li>-->
       </ul>
